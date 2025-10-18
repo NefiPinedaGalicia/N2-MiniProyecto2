@@ -19,11 +19,13 @@ export default function useData(coords) {
             if (!dailyData[date]) {
               dailyData[date] = {
                 temps: [],
-                weather: []
+                weather: [],
+                dt_txt: []
               };
             }
             dailyData[date].temps.push(reading.main.temp);
             dailyData[date].weather.push(reading.weather[0]);
+            dailyData[date].dt_txt.push(reading.dt_txt);
           });
 
           const today = new Date().toISOString().slice(0, 10);
@@ -33,7 +35,7 @@ export default function useData(coords) {
             const day = dailyData[date];
             const temp_min = Math.min(...day.temps);
             const temp_max = Math.max(...day.temps);
-            const noonWeather = day.weather.find(w => dailyData[date].dt_txt?.includes("12:00:00")) || day.weather[Math.floor(day.weather.length / 2)];
+            const noonWeather = day.weather.find((w, i) => day.dt_txt[i]?.includes("12:00:00")) || day.weather[Math.floor(day.weather.length / 2)];
 
             return {
               dt_txt: `${date} 12:00:00`,
