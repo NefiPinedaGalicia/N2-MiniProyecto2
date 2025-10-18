@@ -1,10 +1,13 @@
 import React from "react";
 
-export default function Aside() {
+export default function Aside({ handleSearch, location }) {
   return (
     <div className="w-full h-full flex flex-col gap-5">
       <div className="h-1/10 flex flex-row justify-between items-center px-10">
-        <button className="bg-[#6e717a] w-35 h-10 rounded-xl text-white">
+        <button
+          className="bg-[#6e717a] w-35 h-10 rounded-xl text-white"
+          onClick={handleSearch}
+        >
           Search for places
         </button>
         <button className="bg-[#6e717a] w-10 h-10 rounded-full text-white flex items-center justify-center">
@@ -61,7 +64,7 @@ export default function Aside() {
         <span className="text-8xl text-white font-bold">26° C</span>
         <span className="text-xl text-white">Broken Clouds</span>
         <span className="text-ls text-white">Today , Monday 13 October </span>
-        <span className="text-ls text-white">Location </span>
+        <span className="text-ls text-white">{location}</span>
       </div>
     </div>
   );
