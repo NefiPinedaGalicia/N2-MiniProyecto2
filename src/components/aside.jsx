@@ -1,27 +1,39 @@
 import React from "react";
 
-export default function Aside({ handleSearch, location, handleGetLocation, unit, weatherData }) {
+export default function Aside({
+  handleSearch,
+  location,
+  handleGetLocation,
+  unit,
+  weatherData,
+}) {
   const getTemperature = (kelvin) => {
     if (unit === "C") {
       return Math.round(kelvin - 273.15);
     } else {
-      return Math.round((kelvin - 273.15) * 9/5 + 32);
+      return Math.round(((kelvin - 273.15) * 9) / 5 + 32);
     }
   };
 
   const getFormattedDate = () => {
     const today = new Date();
-    const dayOfWeek = today.toLocaleString('en-US', { weekday: 'long' });
+    const dayOfWeek = today.toLocaleDateString("en-US", { weekday: "short" });
     const day = today.getDate();
-    return `Today, ${dayOfWeek} ${day}`;
+    const month = today.toLocaleDateString("en-US", { month: "short" });
+    return `Today - ${dayOfWeek}, ${day} ${month}`;
   };
 
   const capitalizeDescription = (description) => {
     if (!description) return "--";
-    return description.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    return description
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
   };
 
-  const weatherIcon = weatherData ? `/weather/${weatherData.weather[0].icon}.png` : "/vite.svg";
+  const weatherIcon = weatherData
+    ? `/weather/${weatherData.weather[0].icon}.png`
+    : "/vite.svg";
 
   return (
     <div className="w-full h-full flex flex-col gap-5">
@@ -33,48 +45,10 @@ export default function Aside({ handleSearch, location, handleGetLocation, unit,
           Search for places
         </button>
         <button
-          className="bg-[#6e717a] w-10 h-10 rounded-full text-white flex items-center justify-center"
+          className="bg-[#6e717a] w-8 h-8 rounded-full text-white flex items-center justify-center"
           onClick={handleGetLocation}
         >
-          <svg
-            width={24}
-            height={24}
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            role="img"
-            aria-label="Obtener ubicación"
-          >
-            <title>Obtener ubicación</title>
-            <circle
-              cx="12"
-              cy="12"
-              r="8.5"
-              stroke="currentColor"
-              strokeWidth={1.5}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              opacity="0.9"
-            />
-            <circle
-              cx="12"
-              cy="12"
-              r="5.2"
-              stroke="currentColor"
-              strokeWidth={1.5}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              opacity="0.6"
-            />
-            <circle cx="12" cy="12" r="2.2" fill="currentColor" />
-            <path
-              d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21"
-              stroke="currentColor"
-              strokeWidth={1.5}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <img src="/location.svg" alt="Get Location" />
         </button>
       </div>
       <div className="h-4/10 relative flex justify-center items-center w-full">
@@ -86,11 +60,17 @@ export default function Aside({ handleSearch, location, handleGetLocation, unit,
       </div>
       <div className="h-5/10 flex flex-col justify-center items-center gap-4">
         <span className="text-8xl text-white font-bold">
-          {weatherData ? getTemperature(weatherData.main.temp) : "--"} <span className="text-6xl text-bold text-white">°{unit}</span>{" "}
+          {weatherData ? getTemperature(weatherData.main.temp) : "--"}{" "}
+          <span className="text-6xl text-bold text-white">°{unit}</span>{" "}
         </span>
-        <span className="text-xl text-white">{capitalizeDescription(weatherData?.weather[0].description)}</span>
-        <span className="text-ls text-white">{getFormattedDate()}</span>
-        <span className="text-ls text-white">{location}</span>
+        <span className="text-xl text-white">
+          {capitalizeDescription(weatherData?.weather[0].description)}
+        </span>
+        <span className="text-sm text-gray-400">{getFormattedDate()}</span>
+        <span className="text-xs text-gray-400 flex items-center gap-1">
+          <img src="/location_on.svg" alt="Location" className="w-4 h-4" />
+          {location}
+        </span>
       </div>
     </div>
   );

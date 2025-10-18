@@ -22,20 +22,23 @@ export default function LocationSearch({ handleSearch, handleLocationSelect }) {
   return (
     <div className="w-full h-full flex flex-col p-5 gap-5 bg-[#1e213a]">
       <div className="flex justify-end">
-        <button onClick={handleSearch}>
+        <button onClick={handleSearch} className="w-8 h-8">
           <img src="/close.svg" alt="Close" />
         </button>
       </div>
-      <div className="flex gap-2">
-        <input
-          type="text"
-          className="bg-transparent border border-white text-white p-2 flex-grow"
-          placeholder="Search location"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+      <div className="flex items-center gap-2">
+        <div className="relative flex-grow">
+          <input
+            type="text"
+            className="bg-transparent border border-white text-white p-2 pl-10 w-full rounded-md"
+            placeholder="Search location"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <img src="/search.svg" alt="Search" className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5" />
+        </div>
         <button
-          className="bg-[#3c47e9] text-white px-4 py-2"
+          className="bg-[#6e717a] text-white px-4 py-2 rounded-md"
           onClick={handleSearchClick}
         >
           Search
@@ -45,10 +48,10 @@ export default function LocationSearch({ handleSearch, handleLocationSelect }) {
         {cities.map((city) => (
           <button
             key={city.id}
-            className="text-white text-left p-2 border border-transparent hover:border-white"
+            className="text-white text-left p-3 border border-transparent hover:border-gray-400 rounded-md transition-colors duration-200"
             onClick={() => handleLocationSelect(city)}
           >
-            {city.name}
+            {city.name}, {city.country}
           </button>
         ))}
       </div>
