@@ -25,14 +25,29 @@ export default function App() {
   };
 
   const handleGetLocation = () => {
-    axios.get('https://ip-api.com/json/')
-      .then(response => {
-        setLocation(`${response.data.city}, ${response.data.country}`);
-        setCoords({ lat: response.data.lat, lon: response.data.lon });
-      })
-      .catch(error => {
-        console.error("Error fetching location:", error);
-      });
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setCoords({ lat: latitude, lon: longitude });
+          axios
+            .get(
+              `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${import.meta.env.VITE_API_KEY}`
+            )
+            .then((response) => {
+              setLocation(`${response.data.name}, ${response.data.sys.country}`);
+            })
+            .catch((error) => {
+              console.error("Error fetching location name:", error);
+            });
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
   };
 
   const handleUnitChange = (newUnit) => {
