@@ -1,4 +1,5 @@
 import React from "react";
+
 export default function Humidity({ percentage }) {
   return (
     <div className="bg-[#1e213a] p-4 text-white text-center flex flex-col items-center justify-center gap-2 min-h-[130px] md:h-40">
@@ -7,11 +8,18 @@ export default function Humidity({ percentage }) {
         {percentage}
         <span className="text-xl font-medium">%</span>
       </p>
-      <div className="w-full bg-gray-500 rounded-full h-2.5 mt-2">
-        <div
-          className="bg-yellow-400 h-2.5 rounded-full"
-          style={{ width: `${percentage}%` }}
-        ></div>
+      <div className="w-full">
+        <div className="w-full bg-gray-500 rounded-full h-2.5 mt-2">
+          <div
+            className="bg-yellow-400 h-2.5 rounded-full"
+            style={{ width: `${percentage}%` }}
+          ></div>
+        </div>
+        <div className="flex justify-between text-xs text-gray-400 px-1">
+          <span>0%</span>
+          <span>50%</span>
+          <span>100%</span>
+        </div>
       </div>
     </div>
   );

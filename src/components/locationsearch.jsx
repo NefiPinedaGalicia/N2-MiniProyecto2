@@ -46,7 +46,7 @@ export default function LocationSearch({ handleSearch, handleLocationSelect }) {
           <button
             key={city.id}
             className="text-white text-left p-2 border border-transparent hover:border-white"
-            onClick={() => handleLocationSelect(city.name)}
+            onClick={() => handleLocationSelect(city)}
           >
             {city.name}
           </button>
