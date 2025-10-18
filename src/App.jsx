@@ -25,7 +25,7 @@ export default function App() {
   };
 
   const handleGetLocation = () => {
-    axios.get('http://ip-api.com/json/')
+    axios.get('https://ip-api.com/json/')
       .then(response => {
         setLocation(`${response.data.city}, ${response.data.country}`);
         setCoords({ lat: response.data.lat, lon: response.data.lon });
